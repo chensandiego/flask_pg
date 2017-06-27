@@ -30,6 +30,7 @@ DEFAULTS={'publication':'bbc','city':'London,UK','currency_from':'GBP','currency
 
 
 def get_value_with_fallback(key):
+    print("my key"+key)
     if request.args.get(key):
         return request.args.get(key)
     if request.cookies.get(key):
@@ -44,9 +45,11 @@ def home():
     articles=get_news(publication)
 
     #get customized weather based on user input or default
-    city= get_value_with_fallback('city')
-    weather=get_weather(city)
 
+    city= get_value_with_fallback('city')
+
+    weather=get_weather(city)
+    
 
     #get customized currency based on user input or default
     currency_from=get_value_with_fallback("currency_from")
@@ -87,7 +90,9 @@ def get_news(query):
 def get_weather(query):
     api_url='http://api.openweathermap.org/data/2.5/weather?q={}&units=metric&appid='+api.api_key
     query=urllib.parse.quote(query)
+
     url=api_url.format(query)
+
     data=urlopen(url).read()
     parsed=requests.get(url).json()
 
@@ -96,7 +101,7 @@ def get_weather(query):
     if parsed.get("weather"):
 
         weather={"description":parsed["weather"][0]["description"],"temperature":parsed["main"]["temp"],"city":parsed["name"],'country':parsed['sys']['country']}
-
+    print (weather)
     return weather
 
 
