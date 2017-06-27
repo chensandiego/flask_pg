@@ -1,2 +1,0 @@
-api_key='47f4a9e8147631f25c1468bdc6425c9e'
-openexchange_api='682003bf14314eb9bc9cb410a25328f6'
