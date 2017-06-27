@@ -6,7 +6,16 @@ import requests
 from urllib.request import urlopen
 from flask import Flask,render_template
 from flask import request
-from api import api_key,openexchange_api
+
+import sys
+import os.path
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__),os.path.pardir)))
+import api
+
+
+
+
+
 
 app=Flask(__name__)
 
@@ -60,7 +69,7 @@ def get_news(query):
 
 
 def get_weather(query):
-    api_url='http://api.openweathermap.org/data/2.5/weather?q={}&units=metric&appid='+api_key
+    api_url='http://api.openweathermap.org/data/2.5/weather?q={}&units=metric&appid='+api.api_key
     query=urllib.parse.quote(query)
     url=api_url.format(query)
     data=urlopen(url).read()
@@ -76,7 +85,7 @@ def get_weather(query):
 
 
 def get_rate(frm,to):
-    currency_url="https://openexchangerates.org/api/latest.json?app_id="+openexchange_api
+    currency_url="https://openexchangerates.org/api/latest.json?app_id="+api.openexchange_api
     all_currency=urlopen(currency_url).read()
     parsed=requests.get(currency_url).json().get('rates')
 
