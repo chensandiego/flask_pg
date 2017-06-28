@@ -1,11 +1,10 @@
 from dbhelper import DBHelper
 
-
 from flask import Flask
 from flask import render_template
 
 from flask import request
-
+import dbconfig
 
 app = Flask(__name__)
 
@@ -19,7 +18,7 @@ def home():
     except Exception as e:
         print (e)
         data = None
-    return render_template("home.html",data=data)
+    return render_template("home.html",data=data,gkey=dbconfig.google_key)
 
 
 @app.route("/add",methods=["POST"])

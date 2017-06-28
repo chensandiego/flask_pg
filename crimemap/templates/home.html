@@ -1,11 +1,46 @@
 <html>
 <head>
+  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key={{gkey}}">
+  </script>
+
+
+  <script type="text/javascript">
+  var map;
+  var marker;
+
+  function initialize(){
+    var mapOptions={
+      center:new google.maps.LatLng(-33.30578381949298,26.523442268371582),
+      zoom:15
+    };
+
+    map = new google.maps.Map(document.getElementById("map-canvas"),mapOptions);
+
+    google.maps.event.addListener(map,'click',function(event){
+      placeMarker(event.latLng);
+    });
+  }
+
+  function placeMarker(location){
+    if (marker){
+      marker.setPosition(location);
+    }else{
+      marker=new google.maps.Marker({
+        position: location,
+        map:map
+      });
+    }
+
+  }
+
+  </script>
   <title>Crime map</title>
 
 </head>
-<body>
+<body onload="initialize()">
   <h1>Crime Map</h1>
 
+  <div id="map-canvas" style="width:80%;height:500px;"></div>
   <form action="/add" method="POST">
     <input type="text" name="userinput">
     <input type = "submit" value="submit">
