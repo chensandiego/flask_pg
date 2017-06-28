@@ -20,17 +20,20 @@ class DBHelper:
         finally:
             connection.close()
 
-    def add_input(self,data):
+    def add_crime(self,category,date,latitude,longitude,description):
+
         connection=self.connect()
         try:
             #this should be done through input filter and avoid
             # sql injection
             #query="insert into crimes (description) values ('{}');".format(data)
             #prevent sql injection
-            query="insert into crimes (description) values (%s);"
+            query="insert into crimes (category,date,latitude,longitude,description) values (%s,%s,%s,%s,%s);"
             with connection.cursor() as cursor:
-                cursor.execute(query,data)
+                cursor.execute(query,(category,date,latitude,longitude,description))
                 connection.commit()
+        except Exception as e:
+            print(e)
         finally:
             connection.close()
 
