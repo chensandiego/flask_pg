@@ -2,7 +2,7 @@
 <head>
   <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key={{gkey}}">
   </script>
-
+  <link type="text/css" rel="stylesheet" href="{{url_for('static',filename='css/style.css')}}"/>
 
   <script type="text/javascript">
   var map;
@@ -31,6 +31,10 @@
       });
     }
 
+    document.getElementById('latitude').value=location.lat();
+    document.getElementById('longitude').value=location.lng();
+
+
   }
 
   </script>
@@ -39,11 +43,30 @@
 </head>
 <body onload="initialize()">
   <h1>Crime Map</h1>
+  <p>A map of recent criminal activity in the Grahamstown area</p>
 
-  <div id="map-canvas" style="width:80%;height:500px;"></div>
-  <form action="/add" method="POST">
-    <input type="text" name="userinput">
-    <input type = "submit" value="submit">
+
+  <div id="map-canvas" ></div>
+
+
+
+  <div id ="newcrimeform">
+    <h2>Submit new crime</h2>
+      <form action="/submitcrime" method="POST">
+        <label for="category">Category</lable>
+        <select name="category" id="category">
+            <option value="mugging">Mugging</option>
+            <option value="breakin">Break-in</option>
+        </select>
+        <label for="date">Date</label>
+        <input name="date" id="date" type="date">
+        <label for="latitude">Latitude</label>
+        <input name="latitude" id="latitude" type="text">
+        <label for="longitude">Longitude</label>
+        <input name="longitude" id="longitude" type="text">
+        <label for="description">Description</label>
+        <textarea name="description" id="description" placeholder="A brief but detailed description of the crime"></textarea>
+        <input type = "submit" value="submit">
 
   </form>
 
