@@ -5,6 +5,7 @@ from flask import render_template
 
 from flask import request
 import dbconfig
+import json
 
 app = Flask(__name__)
 
@@ -14,11 +15,13 @@ DB = DBHelper()
 @app.route("/")
 def home():
     try:
-        data = DB.get_all_input()
+        crimes = DB.get_all_crimes()
+        crimes = json.dumps(crimes)
+
     except Exception as e:
         print (e)
         data = None
-    return render_template("home.html",data=data,gkey=dbconfig.google_key)
+    return render_template("home.html",crimes=crimes,gkey=dbconfig.google_key)
 
 
 @app.route("/submitcrime",methods=["POST"])
