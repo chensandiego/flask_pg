@@ -2,7 +2,9 @@ body {
   font-family: sans-serif;
   background: #eee;
 }
-
+#error{
+  color:red;
+}
 input,select,textarea{
   display:block;
   color:grey;
