@@ -2,12 +2,14 @@ from flask import Flask,render_template
 from flask.ext.login import LoginManager
 from flask.ext.login import login_required
 from flask.ext.login import login_user,logout_user
+from flask.ext.login import current_user
+
 from flask import redirect
 from flask import url_for
 from flask import request
 
 
-
+import config
 from mockdbhelper import MockDBHelper as DBHelper
 from passwordhelper import PasswordHelper
 from user import User
@@ -49,10 +51,35 @@ def login():
         return redirect(url_for('account'))
     return home()
 
+
+@app.route("/dashboard")
+@login_required
+def dashboard():
+    return render_template("dashboard.html")
+
 @app.route("/account")
 @login_required
 def account():
-    return "you ar ein"
+    tables=DB.get_tables(current_user.get_id())
+
+    return render_template("account.html",tables=tables)
+
+@app.route("/account/createtable", methods=["POST"])
+@login_required
+def account_createtable():
+    tablename=request.form.get("tablenumber")
+    tableid = DB.add_table(tablename,current_user.get_id())
+    new_url=config.base_url + "newrequest/" + tableid
+    DB.update_table(tableid,new_url)
+    return redirect(url_for('account'))
+
+
+@app.route("/account/deletetable")
+@login_required
+def account_deletetable():
+    tableid=request.args.get("tableid")
+    DB.delete_table(tableid)
+    return redirect(url_for('account'))
 
 
 @login_manager.user_loader
