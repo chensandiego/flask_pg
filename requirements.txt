@@ -27,7 +27,7 @@ ipython==6.0.0
 ipython-genutils==0.2.0
 itsdangerous==0.24
 jedi==0.10.2
-Jinja2==2.8
+Jinja2==2.11.3
 kombu==4.0.2
 language-selector==0.1
 louis==2.6.4
