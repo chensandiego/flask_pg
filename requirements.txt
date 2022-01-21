@@ -23,7 +23,7 @@ gunicorn==19.7.1
 html5lib==0.999
 httplib2==0.9.1
 idna==2.0
-ipython==6.0.0
+ipython==7.16.3
 ipython-genutils==0.2.0
 itsdangerous==0.24
 jedi==0.10.2
